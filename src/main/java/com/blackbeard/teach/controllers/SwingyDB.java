@@ -2,11 +2,15 @@ package com.blackbeard.teach.controllers;
 
 import com.blackbeard.teach.models.PlayerModel;
 import com.blackbeard.teach.models.ValidationErrorModel;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.*;
 
+@Getter
+@Setter
 public class SwingyDB {
 	private String 		fileName;
 	private PlayerModel	hero;
@@ -168,7 +172,7 @@ public class SwingyDB {
         return true;
     }
 
-    private void deletePlayer(String name)
+ 	boolean deletePlayer(String name)
 	{
 		try
 		{
@@ -179,9 +183,11 @@ public class SwingyDB {
 		}catch (SQLException e)
 		{
 			e.printStackTrace();
+			return false;
 		}finally {
 			closeDB();
 		}
+		return true;
 	}
 
 	private void closeDB() {
@@ -199,7 +205,7 @@ public class SwingyDB {
 		}
 	}
 
-	private void deleteTable() {
+	public void deleteTable() {
 		try
 		{
 			Connection connection = getConnection();

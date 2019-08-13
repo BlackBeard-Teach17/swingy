@@ -15,56 +15,75 @@ public class PlayerController {
 	private PlayerModel			p1;
 	private PlayerModel			p2;
 	private GameView gameView;
-	private SwingyDB swingyDB;
 	private PlayerView 			playerView;
 	private GameController controller;
 	private WindowManager mainWindowManager;
+	private SwingyDB swingyDB;
 
+	/**
+	 * Player Controller constructor, initializes instances of SWINGYDB, PlayerView and window manager
+	 * @param windowManager - Initializes instance of the views to be displayed
+	 */
 	public PlayerController(WindowManager windowManager) {
 		swingyDB = new SwingyDB();
 		playerView = (PlayerView) windowManager;
 		this.mainWindowManager = windowManager;
 	}
 
+	/**
+	 * PlayerController constructor that takes two playermodel objects to be used as player and enemy
+	 * @param player1 - Will be used as either player or enemy
+	 * @param player2 - Will be used as either player or enemy
+	 * @param gameView - Instance of game view
+	 * @param gameController - Game Controller to handle the game dynamics
+	 */
 	PlayerController(PlayerModel player1, PlayerModel player2,
 					 GameView gameView, GameController gameController) {
 		Random rand = new Random();
-		swingyDB = new SwingyDB();
+		swingyDB= new SwingyDB();
 
-		if (rand.nextInt(2) == 0) {
-			p1 = player1;
-			p2 = player2;
-		}
-		else {
+		if (rand.nextInt(2) != 0) {
 			p1 = player2;
 			p2 = player1;
+		} else {
+			p1 = player1;
+			p2 = player2;
 		}
 		this.gameView = gameView;
 		this.mainWindowManager = null;
 		controller = gameController;
 	}
 
-	public void	simulateFight() {
+	/**
+	 * This method  simulates the fight between player and enemy each
+	 * taking turn as long as the other has Health
+	 */
+	void	simulateFight() {
 		int playerNumber;
 		int attackValue;
 
 		attackValue = attack(p1);
-		takeHit(p2, attackValue);
+		takeDmg(p2, attackValue);
 		playerNumber = 2;
 		while (p1.getHP() != 0 && p2.getHP() != 0) {
 			if (playerNumber == 1) {
 				attackValue = attack(p1);
-				takeHit(p2, attackValue);
+				takeDmg(p2, attackValue);
 				playerNumber = 2;
 			} else {
 				attackValue = attack(p2);
-				takeHit(p1, attackValue);
+				takeDmg(p1, attackValue);
 				playerNumber = 1;
 			}
 		}
 		controller.fightOver();
 	}
 
+	/**
+	 * This method shows player attack and logs the attack type
+	 * @param tempPlayer - Player model used to get Attack
+	 * @return - returns the attack value
+	 */
 	private int attack(PlayerModel tempPlayer) {
 		int		attackValue;
 		String	attackMessage;
@@ -75,6 +94,11 @@ public class PlayerController {
 		return (attackValue);
 	}
 
+	/**
+	 * Adds XP based on the enemy level
+	 * @param playerWon - Updates the Hero Stats and adds XP
+	 * @param enemyDefeated - Adds XP to the winning player
+	 */
 	void	addExperience(PlayerModel playerWon, PlayerModel enemyDefeated) {
 		int totalExperience;
 		int totalAttack;
@@ -92,7 +116,12 @@ public class PlayerController {
 		swingyDB.updateHero(playerWon);
 	}
 
-	private void	takeHit(PlayerModel tempPlayer, int attackValue) {
+	/**
+	 * This methods is responsible for inflicting player damage.
+	 * @param tempPlayer - This gets HP and Def(to negate attack)
+	 * @param attackValue - amount of damage to take
+	 */
+	private void takeDmg(PlayerModel tempPlayer, int attackValue) {
 		int		hPoint;
 		int		defence;
 		String	defenceMessage;
@@ -148,17 +177,32 @@ public class PlayerController {
 	public void selectArtifact() {
 	}
 
+	/**
+	 * This method retrieves Heros from the DB
+	 * @return - returns a list of heros from the DB.
+	 */
 	public PlayerModel	getLastPlayer() {
-		int	last;
 
 		List<PlayerModel> localPlayers = swingyDB.getHeros();
 		return (localPlayers.get(localPlayers.size()  - 1));
 	}
 
+	/**
+	 * Inserts hero into database
+	 * @return -
+	 */
 	public boolean	savePlayer() {
 		return (swingyDB.insertHero(this.player));
 	}
-
+//	public boolean deletePlayer()
+//	{
+//		return (swingyDB.deletePlayer(this.player));
+//	}
+	/**
+	 * This sets and validates hero class
+	 * @param errors - returns errors if any are found
+	 * @return -  returns errors if any are found
+	 */
 	public boolean validatePlayer(List<ValidationErrorModel> errors) {
 		this.player.setLevel(1);
 		this.player.setHP(100);

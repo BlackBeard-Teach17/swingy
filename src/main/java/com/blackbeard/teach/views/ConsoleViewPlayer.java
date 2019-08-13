@@ -16,11 +16,6 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 
 	private PlayerController playerController;
 	private PlayerModel playerModel;
-	private String				name;
-	private String				pClass;
-	private int					level;
-	private	int					experience;
-	private int					attack;
 	private Scanner				sc;
 
     public ConsoleViewPlayer() {
@@ -35,10 +30,10 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 				+ "│                                                                                    │\n"
 				+ "│          _______.____    __    ____  __  .__   __.   ___________    ____           │\n"
 				+ "│         /       |\\   \\  /  \\  /   /  |  | |  \\ |  |  /  _____\\   \\  /   /           │\n"
-				+ colors.ANSI_RED +  "│        |   (----`  \\   \\/    \\/   /   |  | |   \\|  | |  |  __  \\   \\/   /            │\n"
-				+ colors.ANSI_YELLOW+"│         \\   \\      \\             /    |  | |  . `   | |  | |_  | \\_    _/             │\n"
-				+ colors.ANSI_PURPLE+"│      .----)   |       \\    /\\    /     |  | |  |\\   | |  |__|  |    |  |               │\n"
-				+ colors.ANSI_BLUE + "│      |_______/         \\__/  \\__/      |__| |__| \\__|  \\______|    |__|               │\n"
+				+ colors.ANSI_RED +  "│        |   (----`  \\   \\/    \\/   /   |  | |   \\|  | |  |  __  \\   \\/   /        │\n"
+				+ colors.ANSI_YELLOW+"│         \\   \\      \\             /    |  | |  . `   | |  | |_  | \\_    _/          │\n"
+				+ colors.ANSI_PURPLE+"│      .----)   |       \\    /\\    /     |  | |  |\\   | |  |__|  |    |  |            │\n"
+				+ colors.ANSI_BLUE + "│      |_______/         \\__/  \\__/      |__| |__| \\__|  \\______|    |__|            │\n"
 				+ "│                                                                                    │\n"
 				+ "│                                                                                    │\n"
 				+ "│                                                                                    │\n"
@@ -218,13 +213,11 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 			return ;
 		}
 		do {
-			choice = -1;
 			maxNum = 0;
 			index = 1;
 			System.out.println(colors.ANSI_GREEN + "\nCHOOSE PLAYER" + colors.ANSI_RESET);
 			System.out.println("===============");
 			printStats();
-			validInput = false;
 			for (PlayerModel tempPlayer : players) {
 				maxNum = tempPlayer.getRec();
 				System.out.printf("%-5d", index++);

@@ -32,6 +32,9 @@ public class ConsoleView extends GameView implements WindowManager {
 		}
 	}
 
+	/**
+	 * Shows the player on the map, the hero stats and available commands
+	 */
 	private void	setMapVisible() {
 		int		height;
 		int		width;
@@ -84,9 +87,9 @@ public class ConsoleView extends GameView implements WindowManager {
 	/**
 	 * Sets the map, gameController and playerModel in order to determine the size of the map
 	 * the number of enemies to appear on the map
-	 * @param map
-	 * @param gameController
-	 * @param playerModel
+	 * @param map - map to be displayed
+	 * @param gameController - game controller to be used to handle game dynamics
+	 * @param playerModel -
 	 */
 	public void showMap(char map[][], GameController gameController, PlayerModel playerModel) {
 		this.map = map;

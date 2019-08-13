@@ -1,6 +1,7 @@
 package com.blackbeard.teach;
 
 import com.blackbeard.teach.controllers.PlayerController;
+import com.blackbeard.teach.controllers.SwingyDB;
 import com.blackbeard.teach.controllers.ValidateController;
 import com.blackbeard.teach.views.ConsoleViewPlayer;
 import com.blackbeard.teach.views.GuiViewPlayer;
@@ -22,8 +23,8 @@ public class Swingy {
 		WindowManager windowManager;
 
 		/**
-		 * This will check the first argument if its Console, GUI or Drop DB options
-		 */
+		 ** This will check the first argument if its Console, GUI or Drop DB options
+		 **/
 		new ValidateController();
 		if (args.length > 0) {
 			if (args[0].equalsIgnoreCase("gui")) {
@@ -31,6 +32,13 @@ public class Swingy {
 			}
 			else if (args[0].equalsIgnoreCase("console")) {
 				windowManager = new ConsoleViewPlayer();
+			}
+			else if (args[0].equalsIgnoreCase("Delete"))
+			{
+				SwingyDB swingyDB = new SwingyDB();
+				swingyDB.deleteTable();
+				System.out.println("Database has been deleted!!");
+				windowManager = null;
 			}
 			else {
 				showUsage();

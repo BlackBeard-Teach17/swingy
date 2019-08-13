@@ -12,8 +12,6 @@ public class GuiView extends GameView implements WindowManager {
 	private PlayerModel playerModel;
 	private GameController gameController;
 	private JFrame			frame;
-	private JPanel			playerPanel;
-	private JPanel			playPanel;
 	private JPanel			mainPanel;
 	private JPanel			btnPanel;
 	private JPanel			btnHolder;
