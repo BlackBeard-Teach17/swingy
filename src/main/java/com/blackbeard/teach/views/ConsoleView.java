@@ -78,7 +78,7 @@ public class ConsoleView extends GameView implements WindowManager {
 	 * Updates the map after player movement and/or after player wins fight
 	 * @param map - Takes the current map and displays it.
 	 */
-	public void updateMap(char map[][]) {
+	public void updateMap(char[][] map) {
 		this.map = map;
 		System.out.print("\033[H\033[2J");
 		this.setMapVisible();
@@ -91,7 +91,7 @@ public class ConsoleView extends GameView implements WindowManager {
 	 * @param gameController - game controller to be used to handle game dynamics
 	 * @param playerModel -
 	 */
-	public void showMap(char map[][], GameController gameController, PlayerModel playerModel) {
+	public void showMap(char[][] map, GameController gameController, PlayerModel playerModel) {
 		this.map = map;
 		this.playerModel = playerModel;
 		this.gameController = gameController;
@@ -122,13 +122,13 @@ public class ConsoleView extends GameView implements WindowManager {
 		int choice;
 
         System.out.print("\033[H\033[2J");
-        System.out.println(   "┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑\n"
+        System.out.println(   "┍--------------------------┑\n"
                 + "│                                │\n"
                 + "│                                │\n"+ANSI_RED
                 + "│  Do you want to start battle with  │\n"+ANSI_CYAN
                 + "│" + enemy.getName()+" level:"+enemy.getLevel() +"?│\n"
                 + "│                                │\n"
-                + "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙");
+                + "┕--------------------------------┙");
 
 		System.out.println(ANSI_RED+"1 > Fight");
 		System.out.println(ANSI_YELLOW+"2 > Run");
@@ -138,13 +138,13 @@ public class ConsoleView extends GameView implements WindowManager {
 			return ;
 		}
         System.out.print("\033[H\033[2J");
-        System.out.println(   "┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑\n"
+        System.out.println(   "┍--------------------------------┑\n"
                 + "│                                │\n"
                 + "│                                │\n"
                 + "│  This is no world for cowards!!│\n" + ANSI_CYAN
                 + "│  Next time we will force you   │\n"
                 + "│  into battle.  COWARD!!        │\n" + ANSI_RESET
-                + "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙");
+                + "┕--------------------------------┙");
         Scanner	sc = new Scanner(System.in);
         String w = sc.nextLine();
 		gameControllerTemp.reverseChoice();

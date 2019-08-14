@@ -25,7 +25,7 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 
 	private void showMenu() {
 		System.out.print("\033[H\033[2J");
-		System.out.println(colors.ANSI_CYAN + "┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑\n"
+		System.out.println(colors.ANSI_CYAN + "┍----------------------------------------------------------------------------┑\n"
 				+ "│                                                                                    │\n"
 				+ "│                                                                                    │\n"
 				+ "│          _______.____    __    ____  __  .__   __.   ___________    ____           │\n"
@@ -58,7 +58,7 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 				+ "│                                                                                    │\n"
 				+ "│                                                                                    │\n"
 				+ "│                                                                                    │\n"
-				+ "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙" + colors.ANSI_RESET);
+				+ "┕------------------------------------------------------------------------------------┙" + colors.ANSI_RESET);
 
 	}
 	private String	getPlayerClass() {
@@ -66,7 +66,7 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 		temp = sc.nextLine();
 		while (!temp.equals("1") && !temp.equals("2") && !temp.equals("3") && !temp.equals("4")) {
             System.out.print("\033[H\033[2J");
-            System.out.println(   "┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑\n"
+            System.out.println(   "┍---------------------------------------------------------------------------------┑\n"
                     + "│                                    CHOOSE CLASS                                    │\n"
                     + "│ ┍━━━━━━━━━━━━┑         ┍━━━━━━━━━━━━┑         ┍━━━━━━━━━━━━┑        ┍━━━━━━━━━━━━┑ │\n"
                     + "│ │            │         │            │         │            │        │         /  │ │\n"
@@ -99,7 +99,7 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
                     + "│                                                                                    │\n"
                     + "│                                                                                    │\n"
                     + "│                                                                                    │\n"
-                    + "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙");
+                    + "┕------------------------------------------------------------------------------------┙");
 
             temp = sc.nextLine();
 		}
@@ -112,6 +112,10 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 		return ("Pirate");
 	}
 
+	/**
+	 * This method creates a player.
+	 * @param playerModel - Instance of player model
+	 */
 	public void	createPlayer(PlayerModel playerModel) {
 		String						temp;
 		List<ValidationErrorModel>	errors;

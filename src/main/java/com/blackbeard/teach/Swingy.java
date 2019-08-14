@@ -23,8 +23,8 @@ public class Swingy {
 		WindowManager windowManager;
 
 		/**
-		 ** This will check the first argument if its Console, GUI or Drop DB options
-		 **/
+		 * This will check the first argument if its Console, GUI or Drop DB options
+		 */
 		new ValidateController();
 		if (args.length > 0) {
 			if (args[0].equalsIgnoreCase("gui")) {
@@ -38,7 +38,7 @@ public class Swingy {
 				SwingyDB swingyDB = new SwingyDB();
 				swingyDB.deleteTable();
 				System.out.println("Database has been deleted!!");
-				windowManager = null;
+				return;
 			}
 			else {
 				showUsage();

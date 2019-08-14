@@ -31,7 +31,7 @@ public class PlayerController {
 	}
 
 	/**
-	 * PlayerController constructor that takes two playermodel objects to be used as player and enemy
+	 * PlayerController constructor that takes two player model objects to be used as player and enemy
 	 * @param player1 - Will be used as either player or enemy
 	 * @param player2 - Will be used as either player or enemy
 	 * @param gameView - Instance of game view
@@ -178,8 +178,8 @@ public class PlayerController {
 	}
 
 	/**
-	 * This method retrieves Heros from the DB
-	 * @return - returns a list of heros from the DB.
+	 * This method retrieves Heroes from the DB
+	 * @return - returns a list of heroes from the DB.
 	 */
 	public PlayerModel	getLastPlayer() {
 
@@ -255,6 +255,11 @@ public class PlayerController {
 		}
 		else if (choice == 2) {
 			this.selectPlayer();
+		}
+		else if (choice == 3)
+		{
+			SwingyDB swingyDB = new SwingyDB();
+			swingyDB.deleteTable();
 		}
 		else if (playerView instanceof ConsoleViewPlayer) {
 			System.out.println(ANSI_GREEN+"Thank You For Playing!!");

@@ -28,7 +28,12 @@ public class GuiViewPlayer extends PlayerView implements WindowManager {
 		frame = new JFrame("Simple Frame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
+
+	/**
+	 * This creates a player instance, sets the bounds and shows the class
+	 * options.
+	 * @param playerModel - Instance of player
+	 */
 	public void	createPlayer(PlayerModel playerModel) {
 		frame = new JFrame("New Player");
 		JLabel		nameLabel;
@@ -67,6 +72,11 @@ public class GuiViewPlayer extends PlayerView implements WindowManager {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * This enables the user to choose the player, btn to create player, select player and exit
+	 * @param controller - instance of controller
+	 * @return - an int if successful
+	 */
 	public int	choosePlayer(PlayerController controller) {
 		this.playerController = controller;
 		pnl.setLayout(new BoxLayout(pnl, BoxLayout.PAGE_AXIS));
@@ -92,6 +102,9 @@ public class GuiViewPlayer extends PlayerView implements WindowManager {
 		return (returnNum);
 	}
 
+	/**
+	 * this event handles how different buttons react when clicked
+	 */
 	private class btnEvent implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			switch (e.getActionCommand()) {
