@@ -13,7 +13,7 @@ import static com.blackbeard.teach.views.colors.*;
 public class PlayerController {
 	private PlayerModel 		player;
 	private PlayerModel			p1;
-	private PlayerModel			p2;
+	private PlayerModel pEnemy;
 	private GameView gameView;
 	private SwingyDB swingyDB;
 	private PlayerView 			playerView;
@@ -26,18 +26,18 @@ public class PlayerController {
 		this.mainWindowManager = windowManager;
 	}
 
-	PlayerController(PlayerModel player1, PlayerModel player2,
+	PlayerController(PlayerModel player1, PlayerModel enemy,
 					 GameView gameView, GameController gameController) {
 		Random rand = new Random();
 		swingyDB = new SwingyDB();
 
 		if (rand.nextInt(2) == 0) {
 			p1 = player1;
-			p2 = player2;
+			pEnemy = enemy;
 		}
 		else {
-			p1 = player2;
-			p2 = player1;
+			p1 = enemy;
+			pEnemy = player1;
 		}
 		this.gameView = gameView;
 		this.mainWindowManager = null;
@@ -49,15 +49,15 @@ public class PlayerController {
 		int attackValue;
 
 		attackValue = attack(p1);
-		takeHit(p2, attackValue);
+		takeHit(pEnemy, attackValue);
 		playerNumber = 2;
-		while (p1.getHP() != 0 && p2.getHP() != 0) {
+		while (p1.getHP() != 0 && pEnemy.getHP() != 0) {
 			if (playerNumber == 1) {
 				attackValue = attack(p1);
-				takeHit(p2, attackValue);
+				takeHit(pEnemy, attackValue);
 				playerNumber = 2;
 			} else {
-				attackValue = attack(p2);
+				attackValue = attack(pEnemy);
 				takeHit(p1, attackValue);
 				playerNumber = 1;
 			}
@@ -149,9 +149,8 @@ public class PlayerController {
 	}
 
 	public PlayerModel	getLastPlayer() {
-		int	last;
 
-		List<PlayerModel> localPlayers = swingyDB.getHeros();
+        List<PlayerModel> localPlayers = swingyDB.getHeros();
 		return (localPlayers.get(localPlayers.size()  - 1));
 	}
 

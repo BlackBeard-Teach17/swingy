@@ -37,9 +37,7 @@ public class GuiViewPlayer extends PlayerView implements WindowManager {
 		String[] options = {"WarHero", "Shinobi", "Mage", "Pirate"};
 		
 		this.playerModel = playerModel;
-		nameLabel = new JLabel("Name");
-		classLabel = new JLabel("Class");
-		nameTxt = new JTextField(20);
+        nameTxt = new JTextField(20);
 		nameLabel = new JLabel("Name");
 		classLabel = new JLabel("Class");
 		nameTxt = new JTextField(20);

@@ -43,33 +43,27 @@ public class GameController {
 	}
 
 	void startGame() {
-		int sizeMap;
-		int level;
-
-		level = (this.hero.getPlayer().getLevel() == 0) ? 1 : this.hero.getPlayer().getLevel();
-		sizeMap = (((level - 1) * 5) + 10)  - (level % 2);
-		this.width = sizeMap;
-		this.height = sizeMap;
-		this.playerModel.setX(sizeMap / 2);
-		this.playerModel.setY(sizeMap / 2);
-		this.createEnemies();
-		this.drawMap();
-		this.gameView.showMap(this.mapView, this, this.playerModel);
+        initPlayer();
+        this.gameView.showMap(this.mapView, this, this.playerModel);
 	}
 
-	private void			updatePlay() {
-		int sizeMap;
-		int level;
+    private void initPlayer() {
+        int sizeMap;
+        int level;
 
-		level = (this.hero.getPlayer().getLevel() == 0) ? 1 : this.hero.getPlayer().getLevel();
-		sizeMap = (((level - 1) * 5) + 10)  - (level % 2);
-		this.width = sizeMap;
-		this.height = sizeMap;
-		this.playerModel.setX(sizeMap / 2);
-		this.playerModel.setY(sizeMap / 2);
-		this.createEnemies();
-		this.drawMap();
-	}
+        level = (this.hero.getPlayer().getLevel() == 0) ? 1 : this.hero.getPlayer().getLevel();
+        sizeMap = (((level - 1) * 5) + 10) - (level % 2);
+        this.width = sizeMap;
+        this.height = sizeMap;
+        this.playerModel.setX(sizeMap / 2);
+        this.playerModel.setY(sizeMap / 2);
+        this.createEnemies();
+        this.drawMap();
+    }
+
+    private void			updatePlay() {
+        initPlayer();
+    }
 
 	private void drawMap() {
 		int		wholeArea;

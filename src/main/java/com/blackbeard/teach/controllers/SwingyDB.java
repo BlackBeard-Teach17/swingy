@@ -135,8 +135,8 @@ public class SwingyDB {
 
 		try {
 			conn = getConnection();
-			if (!isUniquePlayer(hero))
-				System.out.println("Player already exists");
+		//	if (!isUniquePlayer(hero))
+		//		System.out.println("Player already exists");
             assert conn != null;
             preparedStatement = conn.prepareStatement(INSERT_PLAYER);
 			preparedStatement.setString(1, this.hero.getName());
