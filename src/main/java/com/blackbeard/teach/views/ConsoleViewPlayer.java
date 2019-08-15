@@ -23,6 +23,9 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 		sc = new Scanner(System.in);
 	}
 
+	/**
+	 * This method is the main welcome screen allow you to choose what you intend to do
+	 */
 	private void showMenu() {
 		System.out.print("\033[H\033[2J");
 		System.out.println(colors.ANSI_CYAN + "┍----------------------------------------------------------------------------┑\n"
@@ -61,6 +64,11 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 				+ "┕------------------------------------------------------------------------------------┙" + colors.ANSI_RESET);
 
 	}
+
+	/**
+	 * The gets the user input for what class the user wants the player to be.
+	 * @return - returns the selected hero class
+	 */
 	private String	getPlayerClass() {
         String	temp;
 		temp = sc.nextLine();
@@ -146,6 +154,11 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 		createPlayer(this.playerModel);
 	}
 
+	/**
+	 * This allows the user to either create a player, choose player from existing or Exit the game.
+	 * @param controller - instance of player controller
+	 * @return - This returns the int for the choice
+	 */
 	public int	choosePlayer(PlayerController controller) {
 		String	temp;
 		boolean	withinRange;
@@ -205,7 +218,10 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 		}
 	}
 
-
+	/**
+	 * This displays the players in the DB
+	 * @param players - List of players in the DB
+	 */
 	public void	selectPlayer(List<PlayerModel> players) {
 		boolean validInput;
 		int		choice;

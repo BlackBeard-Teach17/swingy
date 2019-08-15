@@ -104,6 +104,9 @@ public class GuiViewPlayer extends PlayerView implements WindowManager {
 
 	/**
 	 * this event handles how different buttons react when clicked
+	 * Calls the createPlayer() method if the Create Player button is clicked
+	 * Calls the selectPlayer() method if the Select Player button is clicked
+	 * Exits the program if the Exit button is clicked
 	 */
 	private class btnEvent implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -126,6 +129,9 @@ public class GuiViewPlayer extends PlayerView implements WindowManager {
 		}
 	}
 
+	/**
+	 * This method saves the input field and validates that there are no errors
+	 */
 	private void savePlayerFields() {
 		List<ValidationErrorModel>	errors;
 		StringBuilder allErrors;

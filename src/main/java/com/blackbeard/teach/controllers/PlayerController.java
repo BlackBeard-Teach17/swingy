@@ -162,18 +162,6 @@ public class PlayerController {
 		System.out.println("Press enter to continue");
 	}
 
-	public void drawWin() {
-		System.out.print("\033[H\033[2J");
-		System.out.println(   "┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑\n"
-				+ "│                                │\n"
-				+ "│                                │\n"+ANSI_BLUE
-				+ "│            YOU WIN!!           │\n"
-				+ "│     Soldier on to show you are │\n"
-				+ "│     the strongest warrior!!    │\n"+ANSI_RESET
-				+ "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙");
-		System.out.println("Press enter to continue");
-	}
-
 	public void selectArtifact() {
 	}
 
@@ -189,7 +177,8 @@ public class PlayerController {
 
 	/**
 	 * Inserts hero into database
-	 * @return -
+	 * @return - Success on successful insertion or throws a SQLException if any
+	 * errors are found.
 	 */
 	public boolean	savePlayer() {
 		return (swingyDB.insertHero(this.player));
@@ -231,22 +220,35 @@ public class PlayerController {
 		return (!ValidateController.runValidator(errors, player));
 	}
 
+	/**
+	 * Create a new player to be inserted to the DB
+	 */
 	public void createPlayer() {
 		this.player = new PlayerModel();
 		this.playerView.createPlayer(player);
 	}
 
+	/**
+	 * Initializes the player selected and starts the game
+	 * @param playerModel - instance of the player selected
+	 */
 	public void setPlayer(PlayerModel playerModel) {
 		this.player = playerModel;
 		this.controller = new GameController(this, this.mainWindowManager);
 		this.controller.startGame();
 	}
 
+	/**
+	 * Retrieves the players that are available in the DB.
+	 */
 	public void	selectPlayer() {
 		List<PlayerModel> players = swingyDB.getHeros();
 		this.playerView.selectPlayer(players);
 	}
 
+	/**
+	 * This method takes handles the choice selected and executes the required method
+	 */
 	public void choosePlayer() {
 		int choice;
 

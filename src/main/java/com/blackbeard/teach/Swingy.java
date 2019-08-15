@@ -37,7 +37,7 @@ public class Swingy {
 			{
 				SwingyDB swingyDB = new SwingyDB();
 				swingyDB.deleteTable();
-				System.out.println("Database has been deleted!!");
+				System.out.println(colors.ANSI_RED +"Database has been deleted!!");
 				return;
 			}
 			else {

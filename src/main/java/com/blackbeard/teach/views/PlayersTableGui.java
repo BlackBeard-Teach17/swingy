@@ -19,10 +19,14 @@ class PlayersTableGui extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.players = players;
 		this.playerView = playerView;
-		this.addHeros();
+		this.addHeroes();
 	}
 
-	private void	addHeros() {
+	/**
+	 * The addHeroes method displays a list of heroes in a table form
+	 * and allows for a single selection
+	 */
+	private void addHeroes() {
 		String[] col = {"Rec", "Name", "Class", "lvl", "exp", "Attck", "Def", "Hp"};
 		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
 		JScrollPane scrollPane;
@@ -57,6 +61,9 @@ class PlayersTableGui extends JFrame {
 		this.setVisible(true);
 	}
 
+	/**
+	 * This method handles the player selection and displays a message if an error occurs
+	 */
 	private void selectPlayer() {
 		int selRow;
 
@@ -72,6 +79,9 @@ class PlayersTableGui extends JFrame {
 		}	
 	}
 
+	/**
+	 * Calls the selectPlayer() method when the select button executes without any errors
+	 */
 	private class viewBtnClass implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
             if ("SELECT".equalsIgnoreCase(e.getActionCommand())) {

@@ -149,7 +149,8 @@ public class GuiView extends GameView implements WindowManager {
 	}
 
     /**
-     * Adds functionality to the btn to perform certain actions when pressed
+     * Adds functionality to the btn to perform certain actions when clicked
+	 *
      */
 	private class btnPressed implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -225,6 +226,10 @@ public class GuiView extends GameView implements WindowManager {
 		this.setVisible();
 	}
 
+	/**
+	 * Updates the map after and redraws it on the panel
+	 * @param map - The current map state
+	 */
 	public void	updateMap(char[][] map) {
 		this.map = map;
 		this.mainPanel.removeAll();
@@ -233,6 +238,10 @@ public class GuiView extends GameView implements WindowManager {
 		this.mainPanel.repaint();
 	}
 
+	/**
+	 * This methods updates the display to display fight sequence
+	 * @param prepareString - String to show who is fighting who
+	 */
 	public void	prepareFight(String prepareString) {
 		this.btnHolder.removeAll();
 		this.txtArea.setText(prepareString);
@@ -243,6 +252,11 @@ public class GuiView extends GameView implements WindowManager {
 		this.mainPanel.repaint();
 	}
 
+	/**
+	 * Updates the user of the current situation of the fight and displays the relevant
+	 * fight messages
+	 * @param updateString - String parameter to be displayed in context of the fight
+	 */
 	public void	updateFight(String updateString) {
 		String currentString;
 
@@ -261,6 +275,10 @@ public class GuiView extends GameView implements WindowManager {
 		}
 	}
 
+	/**
+	 * This gets the enemy stats and displays the when an enemy is encountered
+	 * @return - returns the enemy with its stats to be displayed
+	 */
 	private String	getEnemyStats() {
 		String enm;
 
@@ -272,6 +290,11 @@ public class GuiView extends GameView implements WindowManager {
 		return (enm);
 	}
 
+	/**
+	 * This will get the user input choice
+	 * @param enemy - Instance of enemy encountered
+	 * @param gameController - Instance of gameController
+	 */
 	public void	makeChoice(PlayerModel enemy, GameController gameController) {
 		this.gameController = gameController;
 		this.fightEnemy = enemy;
