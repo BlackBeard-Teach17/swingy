@@ -13,7 +13,7 @@ import static com.blackbeard.teach.views.colors.*;
 public class PlayerController {
 	private PlayerModel 		player;
 	private PlayerModel			p1;
-	private PlayerModel			p2;
+	private PlayerModel pEnemy;
 	private GameView gameView;
 	private PlayerView 			playerView;
 	private GameController controller;
@@ -65,7 +65,7 @@ public class PlayerController {
 		attackValue = attack(p1);
 		takeDmg(p2, attackValue);
 		playerNumber = 2;
-		while (p1.getHP() != 0 && p2.getHP() != 0) {
+		while (p1.getHP() != 0 && pEnemy.getHP() != 0) {
 			if (playerNumber == 1) {
 				attackValue = attack(p1);
 				takeDmg(p2, attackValue);
@@ -171,7 +171,7 @@ public class PlayerController {
 	 */
 	public PlayerModel	getLastPlayer() {
 
-		List<PlayerModel> localPlayers = swingyDB.getHeros();
+        List<PlayerModel> localPlayers = swingyDB.getHeros();
 		return (localPlayers.get(localPlayers.size()  - 1));
 	}
 
