@@ -42,12 +42,19 @@ public class GameController {
 		}
 	}
 
+	/**
+	 * This is the point were the map get displayed
+	 */
 	void startGame() {
-        initPlayer();
+        updatePlayState();
         this.gameView.showMap(this.mapView, this, this.playerModel);
 	}
 
-    private void initPlayer() {
+	/**
+	 * This creates the play state
+	 * Sets the map size and creates the enemies
+	 */
+    private void updatePlayState() {
         int sizeMap;
         int level;
 
@@ -62,9 +69,12 @@ public class GameController {
     }
 
     private void			updatePlay() {
-        initPlayer();
+        updatePlayState();
     }
 
+	/**
+	 * This draws the map, player and enemies
+	 */
 	private void drawMap() {
 		int		wholeArea;
 
@@ -84,12 +94,16 @@ public class GameController {
 			mapView[y][wholeArea - 1] = '#';
 			if (y == 0 || (y == wholeArea - 1)) {
 				for (int x = 1; x < (wholeArea - 1); x++) {
-					mapView[y][x] = '#';
+					mapView[y][x] = '#' + ' ';
 				}
 			}
 		}
 	}
 
+	/**
+	 * This selects a random enemy and sets it at random positions
+	 * @return - returns a random enemy
+	 */
 	private String			getRandomName() {
 		Random rand = new Random();
 		String[] names = {
@@ -103,6 +117,10 @@ public class GameController {
 		return (names[rand.nextInt(6)]);
 	}
 
+	/**
+	 * This shows the available player classes
+	 * @return - The selected player class
+	 */
 	private String			getClassName() {
 		Random rand = new Random();
 		String[] pClasses = {
@@ -111,6 +129,10 @@ public class GameController {
 		return (pClasses[rand.nextInt(4)]);
 	}
 
+	/**
+	 * Sets the playerStats based on the class that was selected
+	 * @param tempPlayer - Temporary player model that sets stats
+	 */
 	private void			setPlayerStats(PlayerModel tempPlayer) {
 		Random rand = new Random();
 
@@ -146,31 +168,30 @@ public class GameController {
 		Random	rand = new Random();
 		boolean	conflict;
 		int		i;
-		int		maxEnemies;
 
-		i = -1;
-		maxEnemies = this.enemies.size();
-		tempEnemy.setPosition(rand.nextInt(this.width), rand.nextInt(this.height));
-		conflict = ((tempEnemy.getX() == this.playerModel.getX()) &&
-				(tempEnemy.getY() == this.playerModel.getY()));
-		while (!conflict && ++i <  maxEnemies) {
-			conflict = ((tempEnemy.getX() == this.enemies.get(i).getX()) &&
-					tempEnemy.getY() == this.enemies.get(i).getY());
-		}
-		while (conflict) {
+        i = -1;
+        conflict = isConflict(tempEnemy, rand, i);
+        while (conflict) {
 			i = -1;
-			maxEnemies = this.enemies.size();
-			tempEnemy.setPosition(rand.nextInt(this.width), rand.nextInt(this.height));
-			conflict = ((tempEnemy.getX() == this.playerModel.getX()) &&
-					(tempEnemy.getY() == this.playerModel.getY()));
-			while (!conflict && ++i < maxEnemies) {
-				conflict = ((tempEnemy.getX() == this.enemies.get(i).getX()) &&
-						tempEnemy.getY() == this.enemies.get(i).getY());
-			}
-		}
+			conflict = isConflict(tempEnemy, rand, i);
+        }
 	}
 
-	private void			createEnemies() {
+    private boolean isConflict(PlayerModel tempEnemy, Random rand, int i) {
+        int maxEnemies;
+        boolean conflict;
+        maxEnemies = this.enemies.size();
+        tempEnemy.setPosition(rand.nextInt(this.width), rand.nextInt(this.height));
+        conflict = ((tempEnemy.getX() == this.playerModel.getX()) &&
+                (tempEnemy.getY() == this.playerModel.getY()));
+        while (!conflict && ++i < maxEnemies) {
+            conflict = ((tempEnemy.getX() == this.enemies.get(i).getX()) &&
+                    tempEnemy.getY() == this.enemies.get(i).getY());
+        }
+        return conflict;
+    }
+
+    private void			createEnemies() {
 		int	numEnemies;
 		Random rand = new Random();
 
@@ -187,6 +208,11 @@ public class GameController {
 		this.enemies.add(enemy);
 	}
 
+	/**
+	 * This gets selection and acts based accordingly based on what is selected
+	 * Changes between view if 10 is selected
+	 * @param choice - choice selected as an integer
+	 */
 	public void				setSelection(int choice) {
 		switch (choice) {
 			case 1:
@@ -223,11 +249,14 @@ public class GameController {
 		}
 	}
 
+	/**
+	 * This will simulate the fight the player and the enemy
+	 * @param fightEnemy - Instance of enemy that you fight against
+	 */
 	public void		simulateFight(PlayerModel fightEnemy) {
 		String 				prepareFight;
-		PlayerModel 		player2;
 
-		enemyEncounter = 0;
+        enemyEncounter = 0;
 		enemyModel = fightEnemy;
 		prepareFight = this.playerModel.getName() + " vs " +
 			fightEnemy.getName() + "\n";
@@ -237,6 +266,10 @@ public class GameController {
 		fightController.simulateFight();
 	}
 
+	/**
+	 * This will check whether the enemy or player has HP of 0 or less
+	 * then end the fight
+	 */
 	void			fightOver() {
 		if (playerModel.getHP() > 0) {
 			fightController.addExperience(this.playerModel, enemyModel);
@@ -264,6 +297,10 @@ public class GameController {
 		this.gameView.showMessage(this.playerModel.getName() + " lost fight", true);
 	}
 
+	/**
+	 * This check the player position and checks if the player encounters the enemy.
+	 * If you choose to fight or run
+	 */
 	private void		checkPlayer() {
 		boolean 	collision;
 		PlayerModel	fightEnemy;
@@ -290,13 +327,28 @@ public class GameController {
 		}
 		if (this.playerModel.getX() == -1 || this.playerModel.getX() == (this.width) ||
 				this.playerModel.getY() == -1 || this.playerModel.getY() == (this.width)) {
+
 			this.gameView.showMessage(this.playerModel.getName() + " WON", true);
+			drawWin(this.playerModel);
 			return ;
 		}
 		this.drawMap();
 		this.gameView.updateMap(mapView);
 	}
 
+	public void drawWin(PlayerModel playerModel) {
+		System.out.print("\033[H\033[2J");
+		System.out.println(playerModel.getName());
+		System.out.println(   "┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑\n"
+				+ "│                                │\n"
+				+ "│                                │\n"+colors.ANSI_BLUE
+				+ "│            YOU WIN!!           │\n"
+				+ "│     Soldier on to show you are │\n"
+				+ "│     the strongest warrior!!    │\n"+colors.ANSI_RESET
+				+ "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙");
+		System.out.println("Press enter to continue");
+		return;
+	}
 	public void		reverseChoice() {
 		this.setSelection(reverseChoice);
 	}

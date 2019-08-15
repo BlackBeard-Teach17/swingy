@@ -16,11 +16,6 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 
 	private PlayerController playerController;
 	private PlayerModel playerModel;
-	private String				name;
-	private String				pClass;
-	private int					level;
-	private	int					experience;
-	private int					attack;
 	private Scanner				sc;
 
     public ConsoleViewPlayer() {
@@ -28,17 +23,20 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 		sc = new Scanner(System.in);
 	}
 
+	/**
+	 * This method is the main welcome screen allow you to choose what you intend to do
+	 */
 	private void showMenu() {
 		System.out.print("\033[H\033[2J");
-		System.out.println(colors.ANSI_CYAN + "┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑\n"
+		System.out.println(colors.ANSI_CYAN + "┍----------------------------------------------------------------------------┑\n"
 				+ "│                                                                                    │\n"
 				+ "│                                                                                    │\n"
 				+ "│          _______.____    __    ____  __  .__   __.   ___________    ____           │\n"
 				+ "│         /       |\\   \\  /  \\  /   /  |  | |  \\ |  |  /  _____\\   \\  /   /           │\n"
-				+ colors.ANSI_RED +  "│        |   (----`  \\   \\/    \\/   /   |  | |   \\|  | |  |  __  \\   \\/   /            │\n"
-				+ colors.ANSI_YELLOW+"│         \\   \\      \\             /    |  | |  . `   | |  | |_  | \\_    _/             │\n"
-				+ colors.ANSI_PURPLE+"│      .----)   |       \\    /\\    /     |  | |  |\\   | |  |__|  |    |  |               │\n"
-				+ colors.ANSI_BLUE + "│      |_______/         \\__/  \\__/      |__| |__| \\__|  \\______|    |__|               │\n"
+				+ colors.ANSI_RED +  "│        |   (----`  \\   \\/    \\/   /   |  | |   \\|  | |  |  __  \\   \\/   /        │\n"
+				+ colors.ANSI_YELLOW+"│         \\   \\      \\             /    |  | |  . `   | |  | |_  | \\_    _/          │\n"
+				+ colors.ANSI_PURPLE+"│      .----)   |       \\    /\\    /     |  | |  |\\   | |  |__|  |    |  |            │\n"
+				+ colors.ANSI_BLUE + "│      |_______/         \\__/  \\__/      |__| |__| \\__|  \\______|    |__|            │\n"
 				+ "│                                                                                    │\n"
 				+ "│                                                                                    │\n"
 				+ "│                                                                                    │\n"
@@ -63,15 +61,20 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 				+ "│                                                                                    │\n"
 				+ "│                                                                                    │\n"
 				+ "│                                                                                    │\n"
-				+ "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙" + colors.ANSI_RESET);
+				+ "┕------------------------------------------------------------------------------------┙" + colors.ANSI_RESET);
 
 	}
+
+	/**
+	 * The gets the user input for what class the user wants the player to be.
+	 * @return - returns the selected hero class
+	 */
 	private String	getPlayerClass() {
         String	temp;
 		temp = sc.nextLine();
 		while (!temp.equals("1") && !temp.equals("2") && !temp.equals("3") && !temp.equals("4")) {
             System.out.print("\033[H\033[2J");
-            System.out.println(   "┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑\n"
+            System.out.println(   "┍---------------------------------------------------------------------------------┑\n"
                     + "│                                    CHOOSE CLASS                                    │\n"
                     + "│ ┍━━━━━━━━━━━━┑         ┍━━━━━━━━━━━━┑         ┍━━━━━━━━━━━━┑        ┍━━━━━━━━━━━━┑ │\n"
                     + "│ │            │         │            │         │            │        │         /  │ │\n"
@@ -104,7 +107,7 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
                     + "│                                                                                    │\n"
                     + "│                                                                                    │\n"
                     + "│                                                                                    │\n"
-                    + "┕━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙");
+                    + "┕------------------------------------------------------------------------------------┙");
 
             temp = sc.nextLine();
 		}
@@ -117,6 +120,10 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 		return ("Pirate");
 	}
 
+	/**
+	 * This method creates a player.
+	 * @param playerModel - Instance of player model
+	 */
 	public void	createPlayer(PlayerModel playerModel) {
 		String						temp;
 		List<ValidationErrorModel>	errors;
@@ -147,6 +154,11 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 		createPlayer(this.playerModel);
 	}
 
+	/**
+	 * This allows the user to either create a player, choose player from existing or Exit the game.
+	 * @param controller - instance of player controller
+	 * @return - This returns the int for the choice
+	 */
 	public int	choosePlayer(PlayerController controller) {
 		String	temp;
 		boolean	withinRange;
@@ -206,7 +218,10 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 		}
 	}
 
-
+	/**
+	 * This displays the players in the DB
+	 * @param players - List of players in the DB
+	 */
 	public void	selectPlayer(List<PlayerModel> players) {
 		boolean validInput;
 		int		choice;
@@ -218,13 +233,11 @@ public class ConsoleViewPlayer extends PlayerView implements WindowManager {
 			return ;
 		}
 		do {
-			choice = -1;
 			maxNum = 0;
 			index = 1;
 			System.out.println(colors.ANSI_GREEN + "\nCHOOSE PLAYER" + colors.ANSI_RESET);
 			System.out.println("===============");
 			printStats();
-			validInput = false;
 			for (PlayerModel tempPlayer : players) {
 				maxNum = tempPlayer.getRec();
 				System.out.printf("%-5d", index++);

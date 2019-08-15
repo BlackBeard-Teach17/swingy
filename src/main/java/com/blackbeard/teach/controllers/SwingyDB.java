@@ -2,17 +2,24 @@ package com.blackbeard.teach.controllers;
 
 import com.blackbeard.teach.models.PlayerModel;
 import com.blackbeard.teach.models.ValidationErrorModel;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.sql.*;
 
+@Getter
+@Setter
 public class SwingyDB {
 	private String 		fileName;
 	private PlayerModel	hero;
 	private ResultSet resultSet;
 	Statement			statement;
 	PreparedStatement preparedStatement;
+	/**
+	 * Create statement for creating DB
+	 */
 	private String CREATE_DB = "CREATE TABLE IF NOT EXISTS hero " +
 			"(rec INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			"name Varchar(30), " +
@@ -53,7 +60,7 @@ public class SwingyDB {
 
 	public SwingyDB() {
 		fileName = "jdbc:sqlite:swingy.db";
-		Connection conn = null;
+		Connection conn;
 		try {
 			String driver = "org.sqlite.JDBC";
 			Class.forName(driver);
@@ -61,7 +68,6 @@ public class SwingyDB {
 			if (conn != null) {
 				statement = conn.createStatement();
 				statement.execute(CREATE_DB);
-				DatabaseMetaData meta = conn.getMetaData();
 			}
 		}
 		catch (SQLException err) {
@@ -69,12 +75,11 @@ public class SwingyDB {
 		}
 		catch (ClassNotFoundException err) {
 			System.out.println("Class not found : " + err.getMessage());
+		} finally {
+			closeDB();
 		}
 	}
 
-	public PlayerModel		getPlayer(int rec) {
-		return (null);
-	}
 
 	List<PlayerModel> getHeros() {
 		Connection 					conn;
@@ -106,6 +111,8 @@ public class SwingyDB {
 		catch (SQLException err) {
 			System.out.println("Error reading data : " + err.getMessage());
 			return (null);
+		}finally {
+			closeDB();
 		}
 		return (players);
 	}
@@ -125,10 +132,17 @@ public class SwingyDB {
 		}
 		catch (SQLException err) {
 			err.printStackTrace();
+		}finally {
+			closeDB();
 		}
-
 	}
 
+	/**
+	 * This method inserts hero into the database
+	 * @param hero - hero instance with the attributes (i.e HP, XP, ATK, DEF, LVL, ETC)
+	 * @return - returns true if hero was successfully inserted or catches an SQLException and returns false
+	 * if there was an error
+	 */
 	boolean insertHero(PlayerModel hero) {
 		this.hero = hero;
 		Connection conn;
@@ -150,6 +164,8 @@ public class SwingyDB {
 		}
 		catch (SQLException err) {
 			return (false);
+		} finally {
+			closeDB();
 		}
 		return (true);
 	}
@@ -157,8 +173,8 @@ public class SwingyDB {
 	private boolean isUniquePlayer(PlayerModel player) throws SQLException
     {
         this.hero = player;
-        Connection connection = null;
-        preparedStatement = connection.prepareStatement(GET_PLAYERS);
+        Connection connection = getConnection();
+		preparedStatement = connection.prepareStatement(GET_PLAYERS);
         resultSet = preparedStatement.executeQuery();
         while (resultSet.next())
 		{
@@ -168,20 +184,23 @@ public class SwingyDB {
         return true;
     }
 
-    private void deletePlayer(String name)
+ 	boolean deletePlayer(String name)
 	{
+		Connection connection;
 		try
 		{
-			Connection connection = getConnection();
+			connection = getConnection();
 			preparedStatement = connection.prepareStatement(DELETE_PLAYER);
 			preparedStatement.setString(1, name);
 			preparedStatement.executeUpdate();
 		}catch (SQLException e)
 		{
 			e.printStackTrace();
+			return false;
 		}finally {
 			closeDB();
 		}
+		return true;
 	}
 
 	private void closeDB() {
@@ -199,11 +218,13 @@ public class SwingyDB {
 		}
 	}
 
-	private void deleteTable() {
+	public void deleteTable() {
 		try
 		{
 			Connection connection = getConnection();
-			statement = connection.createStatement();
+			if (connection != null) {
+				statement = connection.createStatement();
+			}
 			statement.executeUpdate(DROP_TABLE);
 		}catch (SQLException e)
 		{

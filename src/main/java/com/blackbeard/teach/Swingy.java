@@ -1,6 +1,7 @@
 package com.blackbeard.teach;
 
 import com.blackbeard.teach.controllers.PlayerController;
+import com.blackbeard.teach.controllers.SwingyDB;
 import com.blackbeard.teach.controllers.ValidateController;
 import com.blackbeard.teach.views.ConsoleViewPlayer;
 import com.blackbeard.teach.views.GuiViewPlayer;
@@ -31,6 +32,13 @@ public class Swingy {
 			}
 			else if (args[0].equalsIgnoreCase("console")) {
 				windowManager = new ConsoleViewPlayer();
+			}
+			else if (args[0].equalsIgnoreCase("Delete"))
+			{
+				SwingyDB swingyDB = new SwingyDB();
+				swingyDB.deleteTable();
+				System.out.println(colors.ANSI_RED +"Database has been deleted!!");
+				return;
 			}
 			else {
 				showUsage();
